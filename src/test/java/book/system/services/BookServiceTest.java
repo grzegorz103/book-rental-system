@@ -37,7 +37,7 @@ public class BookServiceTest
                                 .id( 1L )
                                 .author( "TestAuthor" )
                                 .title( "TestTitle" )
-                                .ISBN( "978-3-16-148410-0" )
+                                .pageNumber( 150 )
                                 .build()
                 );
                 books.add(
@@ -45,7 +45,7 @@ public class BookServiceTest
                                 .id( 2L )
                                 .author( "TestAuthor2" )
                                 .title( "TestTitle2" )
-                                .ISBN( "978-3-16-143954-0" )
+                                .pageNumber( 120 )
                                 .build()
                 );
                 when( bookRepository.findAll() ).thenReturn( books );
@@ -64,7 +64,7 @@ public class BookServiceTest
                         .id( 2L )
                         .author( "TestAuthor3" )
                         .title( "TestTitle3" )
-                        .ISBN( "978-3-16-121954-0" )
+                        .pageNumber( 170 )
                         .build();
                 when( bookRepository.save( test ) ).thenReturn( test );
                 assertThat( bookService.create( test ) ).isEqualTo( test );
