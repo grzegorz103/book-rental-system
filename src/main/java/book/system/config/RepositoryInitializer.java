@@ -48,6 +48,7 @@ public class RepositoryInitializer
                                                 .author( "Henryk Sienkiewicz" )
                                                 .title( "Potop" )
                                                 .pageNumber( 120 )
+                                                .borrowed( false )
                                                 .publishDate( LocalDate.of( 1999, 5, 2 ) )
                                                 .build()
                                 );
@@ -57,6 +58,7 @@ public class RepositoryInitializer
                                                 .author( "Adam Mickiewicz" )
                                                 .title( "Pan Tadeusz" )
                                                 .pageNumber( 320 )
+                                                .borrowed( false )
                                                 .publishDate( LocalDate.of( 1995, 4, 8 ) )
                                                 .build()
                                 );
@@ -66,6 +68,7 @@ public class RepositoryInitializer
                                                 .author( "Adam Mickiewicz" )
                                                 .title( "Sonety krymskie" )
                                                 .pageNumber( 433 )
+                                                .borrowed( false )
                                                 .publishDate( LocalDate.of( 1994, 1, 10 ) )
                                                 .build()
                                 );
