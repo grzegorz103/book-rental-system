@@ -33,4 +33,7 @@ public class Book
         @Column (name = "page_number")
         @Positive
         private Integer pageNumber;
+
+        @Column (name = "borrowed")
+        private boolean borrowed;
 }

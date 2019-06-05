@@ -53,4 +53,10 @@ public class BookServiceImpl implements BookService
                 }
                 return false;
         }
+
+        @Override
+        public Book update ( Book book )
+        {
+                return bookRepository.save( book );
+        }
 }
