@@ -1,18 +1,19 @@
 package book.system.services;
 
+import book.system.dto.BookDTO;
 import book.system.models.Book;
 
 import java.util.List;
 
 public interface BookService
 {
-        Book create ( Book book );
+        BookDTO create ( BookDTO bookDTO );
 
-        List<Book> findAll ();
+        List<BookDTO> findAll ();
 
-        boolean delete ( Book book );
+        boolean delete ( BookDTO bookDTO );
 
         boolean deleteById ( Long id );
 
-        Book update ( Book book );
+        BookDTO update ( BookDTO book );
 }

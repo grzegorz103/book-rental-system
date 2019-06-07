@@ -1,5 +1,6 @@
 package book.system.services;
 
+import book.system.mappers.BookMapper;
 import book.system.models.Book;
 import book.system.models.Rental;
 import book.system.models.User;
@@ -25,11 +26,16 @@ public class RentalServiceImpl implements RentalService
 
         private final float DAILY_PENALTY = 0.5f;
 
+        private final BookMapper bookMapper;
+
         @Autowired
-        public RentalServiceImpl ( RentalRepository rentalRepository, BookService bookService )
+        public RentalServiceImpl ( RentalRepository rentalRepository,
+                                   BookService bookService,
+                                   BookMapper bookMapper )
         {
                 this.rentalRepository = rentalRepository;
                 this.bookService = bookService;
+                this.bookMapper = bookMapper;
         }
 
         @Override
@@ -44,7 +50,7 @@ public class RentalServiceImpl implements RentalService
                                 throw new RuntimeException( "You can't rent a borrowed book" );
 
                         book.setBorrowed( true );
-                        bookService.update( book );
+                        bookService.update( bookMapper.BookToDTO( book ) );
                         LocalDate actualDate = LocalDate.now();
                         return rentalRepository.save(
                                 Rental.builder()
@@ -79,7 +85,7 @@ public class RentalServiceImpl implements RentalService
                 {
                         Book rentBook = rental.getBook();
                         rentBook.setBorrowed( false );
-                        bookService.update( rentBook );
+                        bookService.update( bookMapper.BookToDTO( rentBook ) );
                         rental.setReturned( true );
                         rentalRepository.save( rental );
 

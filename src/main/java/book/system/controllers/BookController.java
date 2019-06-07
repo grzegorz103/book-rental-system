@@ -1,5 +1,6 @@
 package book.system.controllers;
 
+import book.system.dto.BookDTO;
 import book.system.models.Book;
 import book.system.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,16 @@ public class BookController
 
         @GetMapping
         @Secured ({"ROLE_ADMIN", "ROLE_USER"})
-        public List<Book> findAll ()
+        public List<BookDTO> findAll ()
         {
                 return bookService.findAll();
         }
 
         @PostMapping
         @Secured ("ROLE_ADMIN")
-        public Book create ( @Valid @RequestBody Book book )
+        public BookDTO create ( @Valid @RequestBody BookDTO bookDTO )
         {
-                return bookService.create( book );
+                return bookService.create( bookDTO );
         }
 
         @DeleteMapping ("/{id}")
@@ -44,7 +45,7 @@ public class BookController
 
         @DeleteMapping
         @Secured ("ROLE_ADMIN")
-        public boolean delete ( @RequestBody Book book )
+        public boolean delete ( @RequestBody BookDTO book )
         {
                 return bookService.delete( book );
         }

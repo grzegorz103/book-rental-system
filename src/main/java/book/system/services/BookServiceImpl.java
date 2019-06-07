@@ -1,44 +1,61 @@
 package book.system.services;
 
+import book.system.dto.BookDTO;
+import book.system.mappers.BookMapper;
 import book.system.models.Book;
 import book.system.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service ("bookService")
 public class BookServiceImpl implements BookService
 {
         private final BookRepository bookRepository;
 
+        private final BookMapper bookMapper;
+
         @Autowired
-        public BookServiceImpl ( BookRepository bookRepository )
+        public BookServiceImpl ( BookRepository bookRepository, BookMapper bookMapper )
         {
                 this.bookRepository = bookRepository;
+                this.bookMapper = bookMapper;
         }
 
+        // returns dto with added id from db
         @Override
-        public Book create ( Book book )
+        public BookDTO create ( BookDTO bookDTO )
         {
-                if ( book != null )
-                        return bookRepository.save( book );
+                if ( bookDTO != null )
+                {
+                        Book mapped = bookMapper.DTOtoBook( bookDTO );
+                        return bookMapper.BookToDTO( bookRepository.save( mapped ) );
+                }
                 return null;
         }
 
         @Override
-        public List<Book> findAll ()
+        public List<BookDTO> findAll ()
         {
-                return bookRepository.findAll();
+                return bookRepository.findAll()
+                        .stream()
+                        .map( bookMapper::BookToDTO )
+                        .collect( Collectors.toList() );
         }
 
         @Override
-        public boolean delete ( Book book )
+        public boolean delete ( BookDTO bookDTO )
         {
-                if ( book != null && bookRepository.existsById( book.getId() ) )
+                if ( bookDTO != null )
                 {
-                        bookRepository.delete( book );
-                        return true;
+                        if ( bookRepository.existsById( bookDTO.getId() ) )
+                        {
+                                Book mapped = bookMapper.DTOtoBook( bookDTO );
+                                bookRepository.delete( mapped );
+                                return true;
+                        }
                 }
                 return false;
         }
@@ -55,8 +72,13 @@ public class BookServiceImpl implements BookService
         }
 
         @Override
-        public Book update ( Book book )
+        public BookDTO update ( BookDTO book )
         {
-                return bookRepository.save( book );
+                if ( book != null )
+                {
+                        Book mapped = bookMapper.DTOtoBook( book );
+                        return bookMapper.BookToDTO( bookRepository.save( mapped ) );
+                }
+                return null;
         }
 }

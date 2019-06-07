@@ -1,6 +1,7 @@
 package book.system.services;
 
 import book.system.dto.UserDTO;
+import book.system.mappers.UserMapper;
 import book.system.models.User;
 import book.system.models.UserRole;
 import book.system.repositories.UserRepository;
@@ -22,12 +23,15 @@ public class UserServiceImpl implements UserService
 
         private final UserRoleRepository roleRepository;
 
+        private final UserMapper userMapper;
+
         @Autowired
-        public UserServiceImpl ( UserRepository userRepository, BCryptPasswordEncoder encoder, UserRoleRepository roleRepository )
+        public UserServiceImpl ( UserRepository userRepository, BCryptPasswordEncoder encoder, UserRoleRepository roleRepository, UserMapper userMapper )
         {
                 this.userRepository = userRepository;
                 this.encoder = encoder;
                 this.roleRepository = roleRepository;
+                this.userMapper = userMapper;
         }
 
         @Override
@@ -46,18 +50,15 @@ public class UserServiceImpl implements UserService
                 {
                         if ( userRepository.findByUsername( userDTO.getUsername() ) != null )
                                 throw new RuntimeException( "Username is already taken" );
-                        userRepository.save(
-                                User.builder()
-                                        .username( userDTO.getUsername() )
-                                        .password( encoder.encode( userDTO.getPassword() ) )
-                                        .credentials( false )
-                                        .enabled( true )
-                                        .locked( false )
-                                        .expired( false )
-                                        .userRoles( Collections.singleton( roleRepository.findByUserType( UserRole.UserType.ROLE_USER ) ) )
-                                        .build()
-                        );
-                        return userDTO;
+                        User user = userMapper.DTOtoUser( userDTO );
+                        user.setPassword( encoder.encode( user.getPassword() ) );
+                        user.setCredentials( false );
+                        user.setEnabled( true );
+                        user.setExpired( false );
+                        user.setLocked( false );
+                        user.setUserRoles( Collections.singleton( roleRepository.findByUserType( UserRole.UserType.ROLE_USER ) ) );
+
+                        return userMapper.userToDTO( userRepository.save( user ) );
                 }
                 return null;
         }
