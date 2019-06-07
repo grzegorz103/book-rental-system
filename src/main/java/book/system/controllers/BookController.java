@@ -22,28 +22,28 @@ public class BookController
         }
 
         @GetMapping
-        @Secured ("ROLE_ADMIN")
+        @Secured ({"ROLE_ADMIN", "ROLE_USER"})
         public List<Book> findAll ()
         {
                 return bookService.findAll();
         }
 
         @PostMapping
-        @Secured ("ROLE_USER")
+        @Secured ("ROLE_ADMIN")
         public Book create ( @Valid @RequestBody Book book )
         {
                 return bookService.create( book );
         }
 
         @DeleteMapping ("/{id}")
-        @Secured ("ROLE_USER")
+        @Secured ("ROLE_ADMIN")
         public boolean deleteById ( @PathVariable Long id )
         {
                 return bookService.deleteById( id );
         }
 
         @DeleteMapping
-        @Secured ("ROLE_USER")
+        @Secured ("ROLE_ADMIN")
         public boolean delete ( @RequestBody Book book )
         {
                 return bookService.delete( book );
