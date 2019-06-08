@@ -8,12 +8,20 @@
     <div class="collapse navbar-collapse" id="basicExampleNav">
       <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isAuthenticated()">
           <a class="nav-link text-white" routerLink="/books">Books</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="isAuthenticated()">
           <a class="nav-link text-white" routerLink="/rent">Your rented books</a>
+        </li>
+
+        <li class="nav-item" *ngIf="authService.hasAdminRole()">
+            <a class="nav-link text-white" routerLink="/books/add">Add new book</a>
+          </li>
+        
+        <li class="nav-item" *ngIf="authService.hasAdminRole()">
+          <a class="nav-link text-white" routerLink="/users">Users</a>
         </li>
       </ul>
 

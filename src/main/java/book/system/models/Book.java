@@ -1,5 +1,6 @@
 package book.system.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table (name = "books")
@@ -42,4 +44,8 @@ public class Book
 
         @Column (name = "borrowed")
         private boolean borrowed;
+
+        @OneToMany (mappedBy = "book", cascade = CascadeType.ALL)
+        @JsonIgnore
+        private List<Rental> rental;
 }

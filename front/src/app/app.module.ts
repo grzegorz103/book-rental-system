@@ -15,6 +15,8 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 import { RequestInterceptor } from './services/request-interceptor';
 import { RentListComponent } from './components/rent-list/rent-list.component';
 import { RentalService } from './services/rental.service';
+import { BookFormComponent } from './components/book-form/book-form.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { RentalService } from './services/rental.service';
     NavbarComponent,
     UserCreateComponent,
     UserLoginComponent,
-    RentListComponent
+    RentListComponent,
+    BookFormComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

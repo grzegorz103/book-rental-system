@@ -20,7 +20,7 @@ public class Rental
         @GeneratedValue (strategy = GenerationType.AUTO)
         private Long id;
 
-        @ManyToOne (fetch = FetchType.EAGER)
+        @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
         @JoinColumn (name = "book_id", nullable = false)
         private Book book;
 

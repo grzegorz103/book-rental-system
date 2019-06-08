@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="card my-5">
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+          <h2>Add new book</h2>
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" [(ngModel)]="book.author" class="form-control" id="author" name="author" required
+              #name="ngModel">
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" [(ngModel)]="book.title" class="form-control" id="title" name="title" required
+              #name="ngModel">
+          </div>
+          <div class="form-group">
+            <label for="publishDate">Publish date</label>
+            <input type="date" [(ngModel)]="book.publishDate" class="form-control" id="publishDate"
+              name="publishDate" required #name="ngModel">
+          </div>
+          <div class="form-group">
+              <label for="pageNumber">Page number</label>
+              <input type="text" [(ngModel)]="book.pageNumber" class="form-control" id="pageNumber"
+                name="pageNumber" required #name="ngModel">
+            </div>
+        
+          <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info">Submit</button>
+  
+        </form>
+      </div>
+    </div>
+  </div>

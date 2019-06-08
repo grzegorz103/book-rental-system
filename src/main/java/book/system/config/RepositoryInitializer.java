@@ -85,7 +85,7 @@ public class RepositoryInitializer
                                 userRepository.save(
                                         User.builder()
                                                 .username( "admin" )
-                                                .password( encoder.encode( "admin" ) )
+                                                .password( encoder.encode( "admin1" ) )
                                                 .enabled( true )
                                                 .locked( false )
                                                 .credentials( false )
