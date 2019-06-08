@@ -7,9 +7,11 @@ import book.system.models.UserRole;
 import book.system.repositories.UserRepository;
 import book.system.repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.http.SecurityHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -26,7 +28,10 @@ public class UserServiceImpl implements UserService
         private final UserMapper userMapper;
 
         @Autowired
-        public UserServiceImpl ( UserRepository userRepository, BCryptPasswordEncoder encoder, UserRoleRepository roleRepository, UserMapper userMapper )
+        public UserServiceImpl ( UserRepository userRepository,
+                                 BCryptPasswordEncoder encoder,
+                                 UserRoleRepository roleRepository,
+                                 UserMapper userMapper )
         {
                 this.userRepository = userRepository;
                 this.encoder = encoder;
@@ -87,6 +92,32 @@ public class UserServiceImpl implements UserService
                         return true;
                 }
                 return false;
+        }
+
+        @Override
+        public boolean hasAdminRole ()
+        {
+                return (( User ) SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getPrincipal()
+                ).getUserRoles()
+                        .stream()
+                        .anyMatch( e -> e.getUserType() == UserRole.UserType.ROLE_ADMIN );
+        }
+
+        @Override
+        public boolean isLoginCorrect ( String username, String password )
+        {
+                User u = userRepository.findByUsername( username );
+                if ( u == null )
+                {
+                        return false;
+                }
+
+                return u.getUsername().equals( username )
+                        && encoder.matches( password, u.getPassword() );
+
         }
 
 }

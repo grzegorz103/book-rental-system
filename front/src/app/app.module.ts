@@ -2,12 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { BookListComponent } from './book-list/book-list.component';
+import { BookListComponent } from './components/book-list/book-list.component';
 import { BookService } from './services/book-service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
-import { UserCreateComponent } from './user-create/user-create.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserCreateComponent } from './components/user-create/user-create.component';
+import { UserService } from './services/user.service';
+import { FormsModule } from '@angular/forms'
+import { AuthService } from './services/auth.service';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 
 
 @NgModule({
@@ -15,15 +19,17 @@ import { UserCreateComponent } from './user-create/user-create.component';
     AppComponent,
     BookListComponent,
     NavbarComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
-  providers: [BookService],
+  providers: [BookService, UserService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

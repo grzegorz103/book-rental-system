@@ -12,4 +12,8 @@ public interface UserService extends UserDetailsService
         boolean delete ( UserDTO userDTO );
 
         boolean deleteById ( Long id );
+
+        boolean hasAdminRole ();
+
+        boolean isLoginCorrect ( String username, String password );
 }

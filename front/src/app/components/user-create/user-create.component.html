@@ -8,21 +8,17 @@
             <input type="text" [(ngModel)]="user.username" class="form-control" id="name" name="name" required
               #name="ngModel">
           </div>
-          <div class="md-form">
-            <label for="password">Password (min. 4 characters)</label>
+          <div class="form-group">
+            <label for="password">Password (min. 6 characters)</label>
             <input type="password" [(ngModel)]="user.password" class="form-control" id="password" name="password" required
               #name="ngModel">
           </div>
-          <div class="md-form">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" [(ngModel)]="user.confirmPassword" class="form-control" id="confirmPassword"
-              name="confirmPassword" required #name="ngModel">
+          <div class="form-group">
+            <label for="passwordConfirm">Confirm Password</label>
+            <input type="password" [(ngModel)]="user.passwordConfirm" class="form-control" id="passwordConfirm"
+              name="passwordConfirm" required #name="ngModel">
           </div>
-          <div class="md-form">
-            <label for="email">Email</label>
-            <input type="text" [(ngModel)]="user.email" class="form-control" id="email" name="email" required
-              #email="ngModel">
-          </div>
+        
           <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info">Submit</button>
   
         </form>

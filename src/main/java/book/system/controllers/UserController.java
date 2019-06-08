@@ -4,12 +4,14 @@ import book.system.dto.UserDTO;
 import book.system.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping ("/api/user")
+@CrossOrigin
 public class UserController
 {
         private final UserService userService;
@@ -21,7 +23,6 @@ public class UserController
         }
 
         @PostMapping
-        @Secured ("ROLE_ADMIN")
         public UserDTO create ( @Valid @RequestBody UserDTO userDTO )
         {
                 return userService.create( userDTO );
@@ -39,5 +40,19 @@ public class UserController
         public boolean deleteByID ( @PathVariable ("id") Long id )
         {
                 return userService.deleteById( id );
+        }
+
+        @GetMapping ("/admin")
+        @PreAuthorize ("isAuthenticated()")
+        public Boolean hasAdminRole ()
+        {
+                return userService.hasAdminRole();
+        }
+
+        @RequestMapping ("/login")
+        @PreAuthorize ("isAnonymous()")
+        public boolean login ( @Valid @RequestBody UserDTO userDTO )
+        {
+                return userService.isLoginCorrect( userDTO.getUsername(), userDTO.getPassword() );
         }
 }
