@@ -60,14 +60,14 @@ public class BookServiceTest
         }
 
         @Test
-        public void testFindAllBooks ()
+        public void findAllBooksTest ()
         {
                 bookService.findAll();
                 verify( bookRepository, times( 1 ) ).findAll();
         }
 
         @Test
-        public void testCreateBook ()
+        public void createBookTest ()
         {
                 BookDTO bookDTO = BookDTO.builder().author( "testAuthor" ).title( "testTitle" ).build();
                 bookService.create( bookDTO );
@@ -76,7 +76,7 @@ public class BookServiceTest
         }
 
         @Test
-        public void testDeleteBook ()
+        public void deleteBookTest ()
         {
                 when( bookRepository.existsById( 1L ) ).thenReturn( true );
                 assertThat( bookService.delete( books.get( 0 ) ) ).isEqualTo( true );
@@ -84,7 +84,7 @@ public class BookServiceTest
         }
 
         @Test
-        public void testDeleteBookById ()
+        public void deleteBookByIdTest ()
         {
                 when( bookRepository.existsById( 1L ) ).thenReturn( true );
                 assertThat( bookService.delete( books.get( 0 ) ) ).isEqualTo( true );

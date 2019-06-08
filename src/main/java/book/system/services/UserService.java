@@ -9,7 +9,7 @@ public interface UserService extends UserDetailsService
 {
         UserDTO create ( UserDTO userDTO );
 
-        boolean remove ( UserDTO user );
+        boolean delete ( UserDTO userDTO );
 
-        boolean removeById ( Long id );
+        boolean deleteById ( Long id );
 }

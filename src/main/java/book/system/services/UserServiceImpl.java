@@ -64,14 +64,28 @@ public class UserServiceImpl implements UserService
         }
 
         @Override
-        public boolean remove ( UserDTO user )
+        public boolean delete ( UserDTO userDTO )
         {
+                if ( userDTO != null )
+                {
+                        User mapped = userMapper.DTOtoUser( userDTO );
+                        if ( userRepository.existsById( mapped.getId() ) )
+                        {
+                                userRepository.delete( mapped );
+                                return true;
+                        }
+                }
                 return false;
         }
 
         @Override
-        public boolean removeById ( Long id )
+        public boolean deleteById ( Long id )
         {
+                if ( id != null && userRepository.existsById( id ) )
+                {
+                        userRepository.deleteById( id );
+                        return true;
+                }
                 return false;
         }
 

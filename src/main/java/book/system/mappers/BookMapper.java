@@ -15,6 +15,7 @@ public class BookMapper
                 } else
                 {
                         BookDTO bookDTO = new BookDTO();
+                        bookDTO.setId( book.getId() );
                         bookDTO.setAuthor( book.getAuthor() );
                         bookDTO.setTitle( book.getTitle() );
                         bookDTO.setBorrowed( book.isBorrowed() );
@@ -33,6 +34,7 @@ public class BookMapper
                 } else
                 {
                         Book book = new Book();
+                        book.setId( bookDTO.getId() );
                         book.setAuthor( bookDTO.getAuthor() );
                         book.setTitle( bookDTO.getTitle() );
                         book.setBorrowed( bookDTO.isBorrowed() );

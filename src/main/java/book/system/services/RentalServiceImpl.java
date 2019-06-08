@@ -24,6 +24,8 @@ public class RentalServiceImpl implements RentalService
 
         private final float FIRST_WEEK_PENALTY = 2.00f;
 
+        private final int RENT_PERIOD = 14;
+
         private final float DAILY_PENALTY = 0.5f;
 
         private final BookMapper bookMapper;
@@ -56,7 +58,7 @@ public class RentalServiceImpl implements RentalService
                                 Rental.builder()
                                         .book( book )
                                         .rentalDate( actualDate )
-                                        .returnDate( actualDate.plusDays( 14 ) )
+                                        .returnDate( actualDate.plusDays( RENT_PERIOD ) )
                                         .returned( false )
                                         .user( getCurrentUser() )
                                         .build()
@@ -75,7 +77,9 @@ public class RentalServiceImpl implements RentalService
 
         private User getCurrentUser ()
         {
-                return ( User ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                return ( User ) SecurityContextHolder.getContext()
+                        .getAuthentication()
+                        .getPrincipal();
         }
 
         @Override
@@ -83,25 +87,30 @@ public class RentalServiceImpl implements RentalService
         {
                 if ( rental != null )
                 {
-                        Book rentBook = rental.getBook();
-                        rentBook.setBorrowed( false );
-                        bookService.update( bookMapper.BookToDTO( rentBook ) );
-                        rental.setReturned( true );
-                        rentalRepository.save( rental );
-
-                        LocalDate actualDate = LocalDate.now();
-                        if ( actualDate.isAfter( rental.getReturnDate() ) )
+                        if ( !rental.isReturned() )
                         {
-                                long days = Duration.between( rental.getReturnDate().atStartOfDay(), actualDate.atStartOfDay() ).toDays();
-                                if ( days > 0 )
+                                Book rentBook = rental.getBook();
+                                rentBook.setBorrowed( false );
+                                bookService.update( bookMapper.BookToDTO( rentBook ) );
+                                rental.setReturned( true );
+                                rentalRepository.save( rental );
+
+                                LocalDate actualDate = LocalDate.now();
+                                if ( actualDate.isAfter( rental.getReturnDate() ) )
                                 {
-                                        float penalty = days <= 7
-                                                ? FIRST_WEEK_PENALTY
-                                                : FIRST_WEEK_PENALTY + (days - 7) * DAILY_PENALTY;
-                                        return "You exceeded the return date. Your penalty is " + penalty + "zł";
+                                        long days = Duration.between( rental.getReturnDate().atStartOfDay(), actualDate.atStartOfDay() ).toDays();
+                                        if ( days > 0 )
+                                        {
+                                                float penalty = days <= 7
+                                                        ? FIRST_WEEK_PENALTY
+                                                        : FIRST_WEEK_PENALTY + (days - 7) * DAILY_PENALTY;
+                                                return "You exceeded the return date. Your penalty is " + penalty + "zł";
+                                        }
                                 }
-                        }
-                        return "You haven't exceeded the return date.";
+                                return "You haven't exceeded the return date.";
+                        } else
+                                return "This rental is already returned";
+
                 } else
                 {
                         throw new RuntimeException( "Incorrent rental!" );

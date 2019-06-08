@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,9 @@ public class User implements UserDetails
                 joinColumns = @JoinColumn (name = "user_id"),
                 inverseJoinColumns = @JoinColumn (name = "role_id"))
         private Set<UserRole> userRoles;
+
+        @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+        private List<Rental> rentals;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities ()

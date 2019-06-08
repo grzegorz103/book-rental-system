@@ -22,4 +22,16 @@ public class UserController
         {
                 return userService.create( userDTO );
         }
+
+        @DeleteMapping
+        public boolean delete ( @RequestBody UserDTO userDTO )
+        {
+                return userService.delete( userDTO );
+        }
+
+        @DeleteMapping ("/{id}")
+        public boolean deleteByID ( @PathVariable ("id") Long id )
+        {
+                return userService.deleteById( id );
+        }
 }

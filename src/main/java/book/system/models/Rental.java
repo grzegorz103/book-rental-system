@@ -33,7 +33,7 @@ public class Rental
         @Column (name = "returned")
         private boolean returned;
 
-        @ManyToOne (fetch = FetchType.EAGER)
+        @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
         @JoinColumn (name = "user_id", nullable = false)
         private User user;
 }
