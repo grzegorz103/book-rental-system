@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="card my-5">
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              ID
+            </th>
+            <th>
+              Author
+            </th>
+            <th scope="col">
+              Title
+            </th>
+            <th scope="col">
+              Publish date
+            </th>
+            <th scope="col">
+              Page number
+            </th>
+            <th scope="col">Rent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books; let i=index ">
+            <td>{{ book.id }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.publishDate }}</td>
+            <td>{{ book.pageNumber }}</td>
+            <td><button class="btn btn-success" (click)="rent(book.id)</td>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="card my-5">
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+          <h2>Register new account</h2>
+          <div class="form-group">
+            <label for="name">Login (min. 4 characters)</label>
+            <input type="text" [(ngModel)]="user.username" class="form-control" id="name" name="name" required
+              #name="ngModel">
+          </div>
+          <div class="md-form">
+            <label for="password">Password (min. 4 characters)</label>
+            <input type="password" [(ngModel)]="user.password" class="form-control" id="password" name="password" required
+              #name="ngModel">
+          </div>
+          <div class="md-form">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" [(ngModel)]="user.confirmPassword" class="form-control" id="confirmPassword"
+              name="confirmPassword" required #name="ngModel">
+          </div>
+          <div class="md-form">
+            <label for="email">Email</label>
+            <input type="text" [(ngModel)]="user.email" class="form-control" id="email" name="email" required
+              #email="ngModel">
+          </div>
+          <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info">Submit</button>
+  
+        </form>
+      </div>
+    </div>
+  </div>
