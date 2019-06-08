@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { BookService } from './services/book-service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserCreateComponent } from './components/user-create/user-create.component';
@@ -12,6 +12,7 @@ import { UserService } from './services/user.service';
 import { FormsModule } from '@angular/forms'
 import { AuthService } from './services/auth.service';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { RequestInterceptor } from './services/request-interceptor';
 
 
 @NgModule({
@@ -29,7 +30,11 @@ import { UserLoginComponent } from './components/user-login/user-login.component
     RouterModule,
     FormsModule
   ],
-  providers: [BookService, UserService, AuthService],
+  providers: [BookService, UserService, AuthService,    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: RequestInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
