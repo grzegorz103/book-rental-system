@@ -15,6 +15,8 @@ import org.springframework.security.web.http.SecurityHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service ("userService")
 public class UserServiceImpl implements UserService
@@ -46,6 +48,15 @@ public class UserServiceImpl implements UserService
                 if ( user == null )
                         throw new UsernameNotFoundException( "User does not exists" );
                 return user;
+        }
+
+        @Override
+        public List<UserDTO> findAll ()
+        {
+                return userRepository.findAll()
+                        .stream()
+                        .map( userMapper::userToDTO )
+                        .collect( Collectors.toList() );
         }
 
         @Override

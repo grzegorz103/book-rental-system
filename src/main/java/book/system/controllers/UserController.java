@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping ("/api/user")
@@ -22,7 +23,15 @@ public class UserController
                 this.userService = userService;
         }
 
+        @GetMapping
+        @Secured ("ROLE_ADMIN")
+        public List<UserDTO> findAll ()
+        {
+                return userService.findAll();
+        }
+
         @PostMapping
+        @PreAuthorize ("isAnonymous()")
         public UserDTO create ( @Valid @RequestBody UserDTO userDTO )
         {
                 return userService.create( userDTO );

@@ -1,3 +1,30 @@
-<p>
-  user-list works!
-</p>
+<div class="container">
+  <div class="card my-5">
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              ID
+            </th>
+            <th>
+              Username
+            </th>
+            <th scope="col">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td><button class="btn btn-danger" (click)="delete(user.id)">Delete</button>
+            </td>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

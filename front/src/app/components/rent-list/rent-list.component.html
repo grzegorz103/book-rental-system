@@ -35,6 +35,7 @@
             <td>{{ rent.returnDate }}</td>
             <td>{{ rent.returned ? rent.penalty+'zł' : 'Not returned' }}</td>
             <td><button *ngIf="!rent.returned" (click)="returnBook(rent.id)" class="btn btn-success">Return</button>
+            <p *ngIf="rent.returned">Returned</p>
             </td>
         </tbody>
       </table>

@@ -31,6 +31,7 @@ public class UserMapper
                 {
                         UserDTO userDTO = new UserDTO();
                         userDTO.setId( user.getId() );
+                        userDTO.setUsername( user.getUsername() );
                         userDTO.setPassword( user.getPassword() );
                         userDTO.setPasswordConfirm( user.getPassword() );
                         return userDTO;

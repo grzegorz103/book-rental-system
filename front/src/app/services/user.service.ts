@@ -15,6 +15,14 @@ export class UserService {
     this.userUrl = 'http://localhost:8080/api/user/';
   }
 
+  public findAll() {
+    return this.http.get<User[]>(this.userUrl);
+  }
+
+  public delete(id: number) {
+    return this.http.delete(this.userUrl + id);
+  }
+
   public create(user: User) {
     return this.http.post<User>(this.userUrl, user);
   }
