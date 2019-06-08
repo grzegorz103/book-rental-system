@@ -4,13 +4,13 @@
         <form (ngSubmit)="onSubmit()" #userForm="ngForm">
           <h2>Add new book</h2>
           <div class="form-group">
-            <label for="author">Author</label>
-            <input type="text" [(ngModel)]="book.author" class="form-control" id="author" name="author" required
+            <label for="author">Author (min. 3 characters)</label>
+            <input type="text" [(ngModel)]="book.author" minlength="3" class="form-control" id="author" name="author" required
               #name="ngModel">
           </div>
           <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" [(ngModel)]="book.title" class="form-control" id="title" name="title" required
+            <label for="title">Title (min. 3 characters)</label>
+            <input type="text" [(ngModel)]="book.title" minlength="3" class="form-control" id="title" name="title" required
               #name="ngModel">
           </div>
           <div class="form-group">
@@ -20,7 +20,7 @@
           </div>
           <div class="form-group">
               <label for="pageNumber">Page number</label>
-              <input type="text" [(ngModel)]="book.pageNumber" class="form-control" id="pageNumber"
+              <input type="number" min="1" max="10000" [(ngModel)]="book.pageNumber" class="form-control" id="pageNumber"
                 name="pageNumber" required #name="ngModel">
             </div>
         

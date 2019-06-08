@@ -4,19 +4,19 @@
         <form (ngSubmit)="onSubmit()" #userForm="ngForm">
           <h2>Register new account</h2>
           <div class="form-group">
-            <label for="name">Login (min. 4 characters)</label>
-            <input type="text" [(ngModel)]="user.username" class="form-control" id="name" name="name" required
-              #name="ngModel">
+            <label for="name">Login </label>
+            <input type="text" minlength="4" [(ngModel)]="user.username" class="form-control" id="name" name="name" required
+              #name="ngModel" placeholder="Min. 4 characters">
           </div>
           <div class="form-group">
-            <label for="password">Password (min. 6 characters)</label>
-            <input type="password" [(ngModel)]="user.password" class="form-control" id="password" name="password" required
-              #name="ngModel">
+            <label for="password">Password</label>
+            <input type="password" [(ngModel)]="user.password" minlength="6" class="form-control" id="password" name="password" required
+              #name="ngModel" placeholder="Min. 6 characters">
           </div>
           <div class="form-group">
             <label for="passwordConfirm">Confirm Password</label>
-            <input type="password" [(ngModel)]="user.passwordConfirm" class="form-control" id="passwordConfirm"
-              name="passwordConfirm" required #name="ngModel">
+            <input type="password" [(ngModel)]="user.passwordConfirm" minlength="6" class="form-control" id="passwordConfirm"
+              name="passwordConfirm" required #name="ngModel" placeholder="Min. 6 characters">
           </div>
         
           <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info">Submit</button>
