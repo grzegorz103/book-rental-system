@@ -1,5 +1,6 @@
 package book.system.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +54,7 @@ public class User implements UserDetails
         private Set<UserRole> userRoles;
 
         @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+        @JsonIgnore
         private List<Rental> rentals;
 
         @Override

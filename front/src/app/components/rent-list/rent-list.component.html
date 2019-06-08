@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="card my-5">
+    <div class="card-body">
+      <p *ngIf="penalty" class="text-danger">
+        You have penalty! You can't rent new books!
+      </p>
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              ID
+            </th>
+            <th>
+              Book
+            </th>
+            <th scope="col">
+              Rental date
+            </th>
+            <th scope="col">
+              Return date
+            </th>
+            <th scope="col">
+              Penalty
+            </th>
+            <th scope="col">
+              Return
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rent of rentals; let i=index ">
+            <td>{{ rent.id }}</td>
+            <td>{{ rent.book.author }} - {{ rent.book.title }}</td>
+            <td>{{ rent.rentalDate }}</td>
+            <td>{{ rent.returnDate }}</td>
+            <td>{{ rent.returned ? rent.penalty+'zł' : 'Not returned' }}</td>
+            <td><button *ngIf="!rent.returned" (click)="returnBook(rent.id)" class="btn btn-success">Return</button>
+            </td>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

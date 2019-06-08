@@ -28,4 +28,8 @@ export class AuthService {
     this.http.get<boolean>(this.url).subscribe(res => localStorage.setItem('adminRole', String(res)));
   }
 
+  public getUsername(){
+    return localStorage.getItem('username');
+  }
+
 }

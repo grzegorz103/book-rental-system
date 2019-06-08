@@ -6,8 +6,11 @@ import book.system.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping ("/api/rent")
+@CrossOrigin
 public class RentalController
 {
         private final RentalService rentalService;
@@ -18,14 +21,20 @@ public class RentalController
                 this.rentalService = rentalService;
         }
 
-        @PostMapping ("/{id}")
-        public Rental create ( @PathVariable ("id") Book book )
+        @GetMapping
+        public List<Rental> findAll ()
+        {
+                return rentalService.findAll();
+        }
+
+        @GetMapping ("/{id}")
+        public Rental rentBook ( @PathVariable ("id") Book book )
         {
                 return rentalService.create( book );
         }
 
-        @PutMapping ("/{id}")
-        public String returnBook ( @PathVariable ("id") Rental rental )
+        @GetMapping ("/return/{id}")
+        public Rental returnBook ( @PathVariable ("id") Rental rental )
         {
                 return rentalService.returnBook( rental );
         }

@@ -30,7 +30,9 @@
             <td>{{ book.title }}</td>
             <td>{{ book.publishDate }}</td>
             <td>{{ book.pageNumber }}</td>
-            <td><button class="btn btn-success" (click)="rent(book.id)</td>
+            <td><button *ngIf="!penalty" class="btn btn-success" (click)="rentBook(book.id)">Rent it!</button>
+            <p *ngIf="penalty">You have penalty!</p>
+            </td>
         </tbody>
       </table>
 

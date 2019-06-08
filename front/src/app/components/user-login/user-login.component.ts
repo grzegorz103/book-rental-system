@@ -35,6 +35,7 @@ export class UserLoginComponent implements OnInit {
           btoa(this.model.username + ':' + this.model.password)
         );
         this.authService.fetchAdminRole();
+        localStorage.setItem('username', this.model.username);
         alert('You have successfully logged in!');
         this.router.navigate(['/books']);
       } else {

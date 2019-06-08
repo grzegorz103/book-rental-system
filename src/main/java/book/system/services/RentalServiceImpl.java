@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service ("rentalService")
 public class RentalServiceImpl implements RentalService
@@ -41,6 +42,12 @@ public class RentalServiceImpl implements RentalService
         }
 
         @Override
+        public List<Rental> findAll ()
+        {
+                return rentalRepository.findAll();
+        }
+
+        @Override
         @Transactional
         public Rental create ( Book book )
         {
@@ -61,10 +68,46 @@ public class RentalServiceImpl implements RentalService
                                         .returnDate( actualDate.plusDays( RENT_PERIOD ) )
                                         .returned( false )
                                         .user( getCurrentUser() )
+                                        .penalty( 0f )
                                         .build()
                         );
                 }
                 return null;
+        }
+
+
+        @Override
+        public Rental returnBook ( Rental rental )
+        {
+                if ( rental != null )
+                {
+                        if ( !rental.isReturned() )
+                        {
+                                Book rentBook = rental.getBook();
+                                rentBook.setBorrowed( false );
+                                bookService.update( bookMapper.BookToDTO( rentBook ) );
+                                rental.setReturned( true );
+                                rentalRepository.save( rental );
+
+                                LocalDate actualDate = LocalDate.now();
+                                float penalty = 0;
+                                if ( actualDate.isAfter( rental.getReturnDate() ) )
+                                {
+                                        long days = Duration.between( rental.getReturnDate().atStartOfDay(), actualDate.atStartOfDay() ).toDays();
+                                        if ( days > 0 )
+                                        {
+                                                penalty = days <= 7
+                                                        ? FIRST_WEEK_PENALTY
+                                                        : FIRST_WEEK_PENALTY + (days - 7) * DAILY_PENALTY;
+                                        }
+                                }
+                                rental.setPenalty( penalty );
+                        }
+                        return rentalRepository.save( rental );
+                } else
+                {
+                        throw new RuntimeException( "Incorrent rental!" );
+                }
         }
 
         private boolean hasPenalty ( User user )
@@ -82,38 +125,4 @@ public class RentalServiceImpl implements RentalService
                         .getPrincipal();
         }
 
-        @Override
-        public String returnBook ( Rental rental )
-        {
-                if ( rental != null )
-                {
-                        if ( !rental.isReturned() )
-                        {
-                                Book rentBook = rental.getBook();
-                                rentBook.setBorrowed( false );
-                                bookService.update( bookMapper.BookToDTO( rentBook ) );
-                                rental.setReturned( true );
-                                rentalRepository.save( rental );
-
-                                LocalDate actualDate = LocalDate.now();
-                                if ( actualDate.isAfter( rental.getReturnDate() ) )
-                                {
-                                        long days = Duration.between( rental.getReturnDate().atStartOfDay(), actualDate.atStartOfDay() ).toDays();
-                                        if ( days > 0 )
-                                        {
-                                                float penalty = days <= 7
-                                                        ? FIRST_WEEK_PENALTY
-                                                        : FIRST_WEEK_PENALTY + (days - 7) * DAILY_PENALTY;
-                                                return "You exceeded the return date. Your penalty is " + penalty + "zł";
-                                        }
-                                }
-                                return "You haven't exceeded the return date.";
-                        } else
-                                return "This rental is already returned";
-
-                } else
-                {
-                        throw new RuntimeException( "Incorrent rental!" );
-                }
-        }
 }

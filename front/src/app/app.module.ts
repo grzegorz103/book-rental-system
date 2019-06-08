@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms'
 import { AuthService } from './services/auth.service';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { RequestInterceptor } from './services/request-interceptor';
+import { RentListComponent } from './components/rent-list/rent-list.component';
+import { RentalService } from './services/rental.service';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { RequestInterceptor } from './services/request-interceptor';
     BookListComponent,
     NavbarComponent,
     UserCreateComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    RentListComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,7 @@ import { RequestInterceptor } from './services/request-interceptor';
     RouterModule,
     FormsModule
   ],
-  providers: [BookService, UserService, AuthService,    {
+  providers: [BookService, UserService, AuthService,RentalService, {
     provide: HTTP_INTERCEPTORS,
     useClass: RequestInterceptor,
     multi: true
