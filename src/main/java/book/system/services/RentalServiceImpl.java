@@ -98,7 +98,6 @@ public class RentalServiceImpl implements RentalService
                                 rentBook.setBorrowed( false );
                                 bookService.update( bookMapper.BookToDTO( rentBook ) );
                                 rental.setReturned( true );
-                                rentalRepository.save( rental );
 
                                 LocalDate actualDate = LocalDate.now();
                                 float penalty = 0;

@@ -1,10 +1,7 @@
 package book.system.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.ISBN;
 
 import javax.persistence.*;
@@ -47,5 +44,6 @@ public class Book
 
         @OneToMany (mappedBy = "book", cascade = CascadeType.ALL)
         @JsonIgnore
+        @ToString.Exclude
         private List<Rental> rental;
 }

@@ -32,12 +32,6 @@ public class UserControllerTest
         @MockBean
         private UserService userService;
 
-        @Before
-        public void setup ()
-        {
-
-        }
-
 
         @Test
         public void createUserTest () throws Exception
