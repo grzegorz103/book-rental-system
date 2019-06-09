@@ -25,6 +25,14 @@ public class BookServiceImpl implements BookService
         }
 
         // returns dto with added id from db
+
+        /**
+         * Creates new book from given dto as parameter and stores in database.
+         * Thid method uses mapper to convert entity to dto and in reverse
+         *
+         * @param bookDTO book that has to be created
+         * @return entity that has been created, mapped to dto
+         */
         @Override
         public BookDTO create ( BookDTO bookDTO )
         {
@@ -36,6 +44,11 @@ public class BookServiceImpl implements BookService
                 return null;
         }
 
+        /**
+         * Returns all books stored in database
+         *
+         * @return list of books mapped to dto
+         */
         @Override
         public List<BookDTO> findAll ()
         {
@@ -45,6 +58,14 @@ public class BookServiceImpl implements BookService
                         .collect( Collectors.toList() );
         }
 
+        /**
+         * Removes book stored in db by given dto
+         * This method checks whether book stored book exists, and returns
+         * true if book was removed successfully, otherwise false
+         *
+         * @param bookDTO book that has to be removed
+         * @return result of removing
+         */
         @Override
         public boolean delete ( BookDTO bookDTO )
         {
@@ -60,6 +81,14 @@ public class BookServiceImpl implements BookService
                 return false;
         }
 
+        /**
+         * Removes book stored in db by given ID
+         * This method checks whether book stored book exists, and returns
+         * true if book was removed successfully, otherwise false
+         *
+         * @param id id of book that has to be removed
+         * @return result of removing
+         */
         @Override
         public boolean deleteById ( Long id )
         {
@@ -71,6 +100,12 @@ public class BookServiceImpl implements BookService
                 return false;
         }
 
+        /**
+         * Updates existing book entity.
+         *
+         * @param book book with new values to be updated
+         * @return updated book mapped to dto
+         */
         @Override
         public BookDTO update ( BookDTO book )
         {

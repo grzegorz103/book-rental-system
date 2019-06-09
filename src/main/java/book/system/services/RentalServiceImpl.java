@@ -7,8 +7,6 @@ import book.system.models.Book;
 import book.system.models.Rental;
 import book.system.models.User;
 import book.system.repositories.RentalRepository;
-import org.apache.tomcat.jni.Local;
-import org.omg.SendingContext.RunTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -48,6 +46,11 @@ public class RentalServiceImpl implements RentalService
                 this.rentalMapper = rentalMapper;
         }
 
+        /**
+         * Returns list of all rents mapped to dto
+         *
+         * @return list of rents
+         */
         @Override
         public List<RentalDTO> findAll ()
         {
@@ -57,6 +60,15 @@ public class RentalServiceImpl implements RentalService
                         .collect( Collectors.toList() );
         }
 
+        /**
+         * This method creates new rent for given book as parameter and updates
+         * that book's status to borrowed.
+         * User has two weeks to return borrowed book.
+         *
+         * @param book book that rent will be created for
+         * @return created rent
+         * @throws RuntimeException when user has penalty, or the book is already borrowed
+         */
         @Override
         @Transactional
         public RentalDTO create ( Book book )
@@ -86,7 +98,15 @@ public class RentalServiceImpl implements RentalService
                 return null;
         }
 
-
+        /**
+         * This method allows users to return rented book
+         * If user exceeded the return date, the rent will get calculated penalty
+         * for first week 2zł, and 0.5zł for each day after that period
+         *
+         * @param rental rental for book that will be returned
+         * @return rental mapped to dto
+         * @throws RuntimeException when rental is null
+         */
         @Override
         public RentalDTO returnBook ( Rental rental )
         {
@@ -120,6 +140,12 @@ public class RentalServiceImpl implements RentalService
                 }
         }
 
+        /**
+         * Checks whether given user has penalty.
+         *
+         * @param user user to check penalty
+         * @return true if user has penalty, otherwise false
+         */
         private boolean hasPenalty ( User user )
         {
                 return rentalRepository.findAllByUser( user )
@@ -128,6 +154,9 @@ public class RentalServiceImpl implements RentalService
                         .anyMatch( e -> LocalDate.now().isAfter( e.getReturnDate() ) );
         }
 
+        /**
+         * @return currently logged in user
+         */
         private User getCurrentUser ()
         {
                 return ( User ) SecurityContextHolder.getContext()

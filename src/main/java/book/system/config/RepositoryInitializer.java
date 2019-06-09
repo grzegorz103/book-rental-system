@@ -42,6 +42,9 @@ public class RepositoryInitializer
                 this.rentalRepository = rentalRepository;
         }
 
+        /**
+         * Initializes database with sample entities
+         */
         @Bean
         public InitializingBean initializingBean ()
         {
@@ -161,7 +164,7 @@ public class RepositoryInitializer
                                                 .rentalDate( LocalDate.of( 2019, 5, 24 ) )
                                                 .returnDate( LocalDate.of( 2019, 6, 7 ) )
                                                 .user( userRepository.findByUsername( "user2" ) )
-                                                .penalty( 3.5f )
+                                                .penalty( 0f )
                                                 .returned( false )
                                                 .book( bookRepository.findByTitle( "Potop" ) )
                                                 .build()

@@ -28,8 +28,8 @@ export class BookListComponent implements OnInit {
 
   fetchData(): void {
     this.bookService.findAll().subscribe(res => this.books = res.filter(e => !e.borrowed));
-    this.rentalService.findAll().subscribe(res =>{
-      if(res.filter(e => e.user.username === this.authService.getUsername() ).find(e => e.penalty > 0)){
+    this.rentalService.findAll().subscribe(res => {
+      if (res.filter(e => e.user.username === this.authService.getUsername()).find(e => e.penalty > 0)) {
         this.penalty = true;
       }
     });

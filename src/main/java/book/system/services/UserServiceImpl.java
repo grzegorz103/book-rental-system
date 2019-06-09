@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserService
                 return user;
         }
 
+        /**
+         * @return list of users mapped to dto
+         */
         @Override
         public List<UserDTO> findAll ()
         {
@@ -59,6 +62,13 @@ public class UserServiceImpl implements UserService
                         .collect( Collectors.toList() );
         }
 
+        /**
+         * Creates new user
+         *
+         * @param userDTO dto that contains data needed to create new user
+         * @return created user
+         * @throws RuntimeException if username is already taken
+         */
         @Override
         public UserDTO create ( UserDTO userDTO )
         {
@@ -79,6 +89,12 @@ public class UserServiceImpl implements UserService
                 return null;
         }
 
+        /**
+         * Deletes user by given dto
+         *
+         * @param userDTO dto that contains needed data
+         * @return true is user has been removed successfully, otherwise false
+         */
         @Override
         public boolean delete ( UserDTO userDTO )
         {
@@ -94,6 +110,12 @@ public class UserServiceImpl implements UserService
                 return false;
         }
 
+        /**
+         * Deletes user by given id
+         *
+         * @param id id of user that has to removed
+         * @return true if user has been removed, otherwise false
+         */
         @Override
         public boolean deleteById ( Long id )
         {
@@ -105,6 +127,9 @@ public class UserServiceImpl implements UserService
                 return false;
         }
 
+        /**
+         * @return true if currently logged user has admin role
+         */
         @Override
         public boolean hasAdminRole ()
         {
@@ -117,6 +142,12 @@ public class UserServiceImpl implements UserService
                         .anyMatch( e -> e.getUserType() == UserRole.UserType.ROLE_ADMIN );
         }
 
+        /**
+         * This method checks whether provided username and password are correct for any user
+         * stored in database
+         *
+         * @return true if provided username and password match to any user
+         */
         @Override
         public boolean isLoginCorrect ( String username, String password )
         {
@@ -128,7 +159,6 @@ public class UserServiceImpl implements UserService
 
                 return u.getUsername().equals( username )
                         && encoder.matches( password, u.getPassword() );
-
         }
 
 }

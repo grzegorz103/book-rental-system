@@ -32,7 +32,6 @@ public class UserControllerTest
         @MockBean
         private UserService userService;
 
-
         @Test
         public void createUserTest () throws Exception
         {

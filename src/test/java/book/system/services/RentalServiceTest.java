@@ -16,12 +16,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,11 +91,4 @@ public class RentalServiceTest
                 rentalService.returnBook( null );
         }
 
-        @Test
-        public void returnBookTest ()
-        {
-                Rental rental = mock( Rental.class );
-                rentalService.returnBook( rental );
-                verify( rentalRepository ).save( any( Rental.class ) );
-        }
 }

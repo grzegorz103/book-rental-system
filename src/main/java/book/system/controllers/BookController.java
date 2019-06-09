@@ -23,6 +23,11 @@ public class BookController
                 this.bookService = bookService;
         }
 
+        /**
+         * Finds all books mapped to DTO.
+         *
+         * @return list of all books
+         */
         @GetMapping
         @Secured ({"ROLE_ADMIN", "ROLE_USER"})
         public List<BookDTO> findAll ()
@@ -30,6 +35,12 @@ public class BookController
                 return bookService.findAll();
         }
 
+        /**
+         * Allows to create new books
+         *
+         * @param bookDTO book that has to be created
+         * @return created book
+         */
         @PostMapping
         @Secured ("ROLE_ADMIN")
         public BookDTO create ( @Valid @RequestBody BookDTO bookDTO )
@@ -37,6 +48,11 @@ public class BookController
                 return bookService.create( bookDTO );
         }
 
+        /**
+         * Deletes book by given id
+         * @param id book's id that has to be deleted
+         * @return  true is book has been removed, otherwise false
+         */
         @DeleteMapping ("/{id}")
         @Secured ("ROLE_ADMIN")
         public boolean deleteById ( @PathVariable Long id )
@@ -44,6 +60,11 @@ public class BookController
                 return bookService.deleteById( id );
         }
 
+        /**
+         * Deletes book by given object
+         * @param book
+         * @return
+         */
         @DeleteMapping
         @Secured ("ROLE_ADMIN")
         public boolean delete ( @RequestBody BookDTO book )

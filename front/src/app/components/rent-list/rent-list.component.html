@@ -4,42 +4,47 @@
       <p *ngIf="penalty" class="text-danger">
         You have penalty! You can't rent new books!
       </p>
-      <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">
-              ID
-            </th>
-            <th>
-              Book
-            </th>
-            <th scope="col">
-              Rental date
-            </th>
-            <th scope="col">
-              Return date
-            </th>
-            <th scope="col">
-              Penalty
-            </th>
-            <th scope="col">
-              Return
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let rent of rentals; let i=index ">
-            <td>{{ rent.id }}</td>
-            <td>{{ rent.book.author }} - {{ rent.book.title }}</td>
-            <td>{{ rent.rentalDate }}</td>
-            <td>{{ rent.returnDate }}</td>
-            <td>{{ rent.returned ? rent.penalty+'zł' : 'Not returned' }}</td>
-            <td><button *ngIf="!rent.returned" (click)="returnBook(rent.id)" class="btn btn-success">Return</button>
-            <p *ngIf="rent.returned">Returned</p>
-            </td>
-        </tbody>
-      </table>
-
+      <div *ngIf="rentals.length > 0">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">
+                ID
+              </th>
+              <th>
+                Book
+              </th>
+              <th scope="col">
+                Rental date
+              </th>
+              <th scope="col">
+                Final return date*
+              </th>
+              <th scope="col">
+                Penalty
+              </th>
+              <th scope="col">
+                Return
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rent of rentals; let i=index ">
+              <td>{{ rent.id }}</td>
+              <td>{{ rent.book.author }} - {{ rent.book.title }}</td>
+              <td>{{ rent.rentalDate }}</td>
+              <td>{{ rent.returnDate }}</td>
+              <td>{{ rent.returned ? rent.penalty+'zł' : 'Not returned' }}</td>
+              <td><button *ngIf="!rent.returned" (click)="returnBook(rent.id)" class="btn btn-success">Return</button>
+                <p *ngIf="rent.returned">Returned</p>
+              </td>
+          </tbody>
+        </table>
+        *You have 2 weeks to return the book. If you exceed the final return date, you will get penalty 2zł for the first week, and 0.5zł for each day after that period.
+      </div>
+      <div *ngIf="rentals.length === 0">
+        You haven't rented any book yet!
+      </div>
     </div>
   </div>
 </div>
