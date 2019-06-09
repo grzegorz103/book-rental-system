@@ -2,7 +2,7 @@
 Book rental system created with Spring and Angular
 
 ## How to run it?
-This application uses PostgreSQL so configure your database first and set username/password in the application.properties file stored in resources
+This application uses PostgreSQL so configure your database first and set username/password in the application.properties file stored in resources.  
 Launch SystemApplication class from book/system directory. Remember to have Lombok plugin installed.   
 To start angular app, you need to type 'ng serve' in angular console. Make sure you are in the \BookRentalSystem\front folder!  
 Swagger doc is available on http://localhost:8080/swagger-ui.html  
