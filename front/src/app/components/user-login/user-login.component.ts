@@ -39,7 +39,7 @@ export class UserLoginComponent implements OnInit {
         alert('You have successfully logged in!');
         this.router.navigate(['/books']);
       } else {
-        this.loginIncorrect = true;
+        alert('The login/password you provided is incorrect!');
       }
     });
   }

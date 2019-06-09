@@ -1,9 +1,11 @@
 package book.system.config;
 
 import book.system.models.Book;
+import book.system.models.Rental;
 import book.system.models.User;
 import book.system.models.UserRole;
 import book.system.repositories.BookRepository;
+import book.system.repositories.RentalRepository;
 import book.system.repositories.UserRepository;
 import book.system.repositories.UserRoleRepository;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,15 +28,18 @@ public class RepositoryInitializer
 
         private final UserRoleRepository userRoleRepository;
 
+        private final RentalRepository rentalRepository;
+
         private final BCryptPasswordEncoder encoder;
 
         @Autowired
-        public RepositoryInitializer ( BookRepository bookRepository, UserRepository userRepository, UserRoleRepository userRoleRepository, BCryptPasswordEncoder encoder )
+        public RepositoryInitializer ( BookRepository bookRepository, UserRepository userRepository, UserRoleRepository userRoleRepository, BCryptPasswordEncoder encoder, RentalRepository rentalRepository )
         {
                 this.bookRepository = bookRepository;
                 this.userRepository = userRepository;
                 this.userRoleRepository = userRoleRepository;
                 this.encoder = encoder;
+                this.rentalRepository = rentalRepository;
         }
 
         @Bean
@@ -48,7 +53,7 @@ public class RepositoryInitializer
                                                 .author( "Henryk Sienkiewicz" )
                                                 .title( "Potop" )
                                                 .pageNumber( 120 )
-                                                .borrowed( false )
+                                                .borrowed( true )
                                                 .publishDate( LocalDate.of( 1999, 5, 2 ) )
                                                 .build()
                                 );
@@ -72,7 +77,28 @@ public class RepositoryInitializer
                                                 .publishDate( LocalDate.of( 1994, 1, 10 ) )
                                                 .build()
                                 );
+
+                                bookRepository.save(
+                                        Book.builder()
+                                                .author( "Juliusz Slowacki" )
+                                                .title( "Kordian" )
+                                                .pageNumber( 182 )
+                                                .borrowed( true )
+                                                .publishDate( LocalDate.of( 1992, 4, 2 ) )
+                                                .build()
+                                );
+
+                                bookRepository.save(
+                                        Book.builder()
+                                                .author( "Henryk Sienkiewicz" )
+                                                .title( "Ogniem i mieczem" )
+                                                .pageNumber( 203 )
+                                                .borrowed( false )
+                                                .publishDate( LocalDate.of( 1990, 1, 10 ) )
+                                                .build()
+                                );
                         }
+
 
                         if ( userRoleRepository.findAll().isEmpty() )
                         {
@@ -101,6 +127,43 @@ public class RepositoryInitializer
                                                 .credentials( false )
                                                 .locked( false )
                                                 .userRoles( new HashSet<>( Collections.singleton( userRoleRepository.findByUserType( UserRole.UserType.ROLE_USER ) ) ) )
+                                                .build()
+                                );
+
+                                userRepository.save(
+                                        User.builder()
+                                                .username( "user2" )
+                                                .password( encoder.encode( "usertest2" ) )
+                                                .enabled( true )
+                                                .credentials( false )
+                                                .locked( false )
+                                                .userRoles( new HashSet<>( Collections.singleton( userRoleRepository.findByUserType( UserRole.UserType.ROLE_USER ) ) ) )
+                                                .build()
+                                );
+                        }
+
+                        if ( rentalRepository.findAll().isEmpty() )
+                        {
+                                rentalRepository.save(
+                                        Rental.builder()
+                                                .rentalDate( LocalDate.of( 2019, 5, 15 ) )
+                                                .returnDate( LocalDate.of( 2019, 5, 29 ) )
+                                                .user( userRepository.findByUsername( "user2" ) )
+                                                .penalty( 3.5f )
+                                                .returned( true )
+                                                .book( bookRepository.findByTitle( "Kordian" ) )
+                                                .build()
+                                );
+
+
+                                rentalRepository.save(
+                                        Rental.builder()
+                                                .rentalDate( LocalDate.of( 2019, 5, 24 ) )
+                                                .returnDate( LocalDate.of( 2019, 6, 7 ) )
+                                                .user( userRepository.findByUsername( "user2" ) )
+                                                .penalty( 3.5f )
+                                                .returned( false )
+                                                .book( bookRepository.findByTitle( "Potop" ) )
                                                 .build()
                                 );
                         }
