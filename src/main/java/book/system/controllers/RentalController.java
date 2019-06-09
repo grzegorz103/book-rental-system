@@ -1,5 +1,6 @@
 package book.system.controllers;
 
+import book.system.dto.RentalDTO;
 import book.system.models.Book;
 import book.system.models.Rental;
 import book.system.services.RentalService;
@@ -22,19 +23,19 @@ public class RentalController
         }
 
         @GetMapping
-        public List<Rental> findAll ()
+        public List<RentalDTO> findAll ()
         {
                 return rentalService.findAll();
         }
 
         @GetMapping ("/{id}")
-        public Rental rentBook ( @PathVariable ("id") Book book )
+        public RentalDTO rentBook ( @PathVariable ("id") Book book )
         {
                 return rentalService.create( book );
         }
 
         @GetMapping ("/return/{id}")
-        public Rental returnBook ( @PathVariable ("id") Rental rental )
+        public RentalDTO returnBook ( @PathVariable ("id") Rental rental )
         {
                 return rentalService.returnBook( rental );
         }

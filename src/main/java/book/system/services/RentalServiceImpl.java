@@ -1,6 +1,8 @@
 package book.system.services;
 
+import book.system.dto.RentalDTO;
 import book.system.mappers.BookMapper;
+import book.system.mappers.RentalMapper;
 import book.system.models.Book;
 import book.system.models.Rental;
 import book.system.models.User;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service ("rentalService")
 public class RentalServiceImpl implements RentalService
@@ -31,25 +34,32 @@ public class RentalServiceImpl implements RentalService
 
         private final BookMapper bookMapper;
 
+        private final RentalMapper rentalMapper;
+
         @Autowired
         public RentalServiceImpl ( RentalRepository rentalRepository,
                                    BookService bookService,
-                                   BookMapper bookMapper )
+                                   BookMapper bookMapper,
+                                   RentalMapper rentalMapper )
         {
                 this.rentalRepository = rentalRepository;
                 this.bookService = bookService;
                 this.bookMapper = bookMapper;
+                this.rentalMapper = rentalMapper;
         }
 
         @Override
-        public List<Rental> findAll ()
+        public List<RentalDTO> findAll ()
         {
-                return rentalRepository.findAll();
+                return rentalRepository.findAll()
+                        .stream()
+                        .map( rentalMapper::rentalToDTO )
+                        .collect( Collectors.toList() );
         }
 
         @Override
         @Transactional
-        public Rental create ( Book book )
+        public RentalDTO create ( Book book )
         {
                 if ( hasPenalty( getCurrentUser() ) )
                         throw new RuntimeException( "You can't borrow a book because you have a penalty" );
@@ -61,7 +71,7 @@ public class RentalServiceImpl implements RentalService
                         book.setBorrowed( true );
                         bookService.update( bookMapper.BookToDTO( book ) );
                         LocalDate actualDate = LocalDate.now();
-                        return rentalRepository.save(
+                        return rentalMapper.rentalToDTO( rentalRepository.save(
                                 Rental.builder()
                                         .book( book )
                                         .rentalDate( actualDate )
@@ -70,6 +80,7 @@ public class RentalServiceImpl implements RentalService
                                         .user( getCurrentUser() )
                                         .penalty( 0f )
                                         .build()
+                                )
                         );
                 }
                 return null;
@@ -77,7 +88,7 @@ public class RentalServiceImpl implements RentalService
 
 
         @Override
-        public Rental returnBook ( Rental rental )
+        public RentalDTO returnBook ( Rental rental )
         {
                 if ( rental != null )
                 {
@@ -103,7 +114,7 @@ public class RentalServiceImpl implements RentalService
                                 }
                                 rental.setPenalty( penalty );
                         }
-                        return rentalRepository.save( rental );
+                        return rentalMapper.rentalToDTO( rentalRepository.save( rental ) );
                 } else
                 {
                         throw new RuntimeException( "Incorrent rental!" );

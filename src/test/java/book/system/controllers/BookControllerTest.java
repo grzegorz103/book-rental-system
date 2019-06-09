@@ -62,7 +62,8 @@ public class BookControllerTest
         public void findAllBooksTest () throws Exception
         {
                 when( bookService.findAll() ).thenReturn( books );
-                this.mockMvc.perform( get( "/api/book" ).with( httpBasic( "admin", "admin" ) ) )
+                this.mockMvc.perform( get( "/api/book" )
+                        .with( httpBasic( "admin", "admin1" ) ) )
                         .andExpect( status().isOk() )
                         .andExpect( jsonPath( "$.length()" ).value( 3 ) );
         }
@@ -83,7 +84,7 @@ public class BookControllerTest
                 objectMapper.configure( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false );
                 when( bookService.create( testBook ) ).thenReturn( testBook );
                 this.mockMvc.perform( post( "/api/book" )
-                        .with( httpBasic( "admin", "admin" ) )
+                        .with( httpBasic( "admin", "admin1" ) )
                         .contentType( MediaType.APPLICATION_JSON )
                         .content( objectMapper.writeValueAsString( testBook ) ) )
                         .andExpect( status().isOk() )
@@ -95,7 +96,7 @@ public class BookControllerTest
         {
                 this.mockMvc.perform( delete( "/api/book/{id}", "1" )
                         .contentType( MediaType.APPLICATION_JSON )
-                        .with( httpBasic( "admin", "admin" ) )
+                        .with( httpBasic( "admin", "admin1" ) )
                         .accept( MediaType.APPLICATION_JSON ) )
                         .andExpect( status().isOk() );
         }
@@ -118,7 +119,7 @@ public class BookControllerTest
                 this.mockMvc.perform( delete( "/api/book/" )
                         .contentType( MediaType.APPLICATION_JSON )
                         .content( objectMapper.writeValueAsString( testBook ) )
-                        .with( httpBasic( "admin", "admin" ) )
+                        .with( httpBasic( "admin", "admin1" ) )
                         .accept( MediaType.APPLICATION_JSON ) )
                         .andExpect( status().isOk() );
 

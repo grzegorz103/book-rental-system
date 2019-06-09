@@ -1,5 +1,6 @@
 package book.system.services;
 
+import book.system.dto.RentalDTO;
 import book.system.models.Book;
 import book.system.models.Rental;
 
@@ -7,9 +8,9 @@ import java.util.List;
 
 public interface RentalService
 {
-        List<Rental> findAll();
+        List<RentalDTO> findAll();
 
-        Rental create ( Book book );
+        RentalDTO create ( Book book );
 
-        Rental returnBook ( Rental rental );
+        RentalDTO returnBook ( Rental rental );
 }
