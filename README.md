@@ -18,7 +18,7 @@ User accounts:
 Admin has ability to remove users and create new books.  
 user2 account is unable to borrow new books because he has penalty for not returning book back on time
 
-Example screens:  
+# Example screens:  
 
 Book list page:  
 ![alt text](https://i.imgur.com/j96d8dn.png)  
