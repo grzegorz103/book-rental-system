@@ -1,6 +1,9 @@
 # Book Rental System
 Book rental system created with Spring and Angular
 
+## Live demo
+Check [live demo](https://rent-book.herokuapp.com/)
+
 ## How to run it?
 This application uses PostgreSQL so configure your database first and set username/password in the application.properties file stored in resources.  
 Launch SystemApplication class from book/system directory. Remember to have Lombok plugin installed.   
