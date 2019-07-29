@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     private http: HttpClient
   ) {
-    this.userUrl = 'http://localhost:8080/api/user/';
+    this.userUrl = '/api/user/';
   }
 
   public findAll() {
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   public isLoginCorrect(username: string, password: string) {
-    return this.http.post<Observable<boolean>>('http://localhost:8080/api/user/login', {
+    return this.http.post<Observable<boolean>>('/api/user/login', {
       username: username,
       password: password,
       passwordConfirm: password

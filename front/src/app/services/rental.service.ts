@@ -8,7 +8,7 @@ export class RentalService {
   rentalUrl: string;
 
   constructor(private http: HttpClient) {
-    this.rentalUrl = 'http://localhost:8080/api/rent/';
+    this.rentalUrl = '/api/rent/';
   }
 
   public findAll() {

@@ -9,7 +9,7 @@ export class BookService {
   constructor(
     private http: HttpClient
   ) {
-    this.bookUrl = 'http://localhost:8080/api/book/'
+    this.bookUrl = '/api/book/'
   }
 
   public findAll() {
