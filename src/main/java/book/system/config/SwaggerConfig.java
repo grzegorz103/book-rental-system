@@ -1,4 +1,4 @@
-/*package book.system.config;
+package book.system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,4 +21,4 @@ public class SwaggerConfig
                         .paths(regex("/api.*"))
                         .build();
         }
-}*/
+}
