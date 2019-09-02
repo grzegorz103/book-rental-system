@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.ISBN;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
@@ -23,15 +25,19 @@ public class Book
         private Long id;
 
         @Column (name = "author", length = 50)
+        @NotBlank
         private String author;
 
         @Column (name = "title", length = 100)
+        @NotBlank
         private String title;
 
+        @NotNull
         private LocalDate publishDate;
 
         @Column (name = "page_number")
         @Positive
+        @NotNull
         private Integer pageNumber;
 
         @Column (name = "borrowed")

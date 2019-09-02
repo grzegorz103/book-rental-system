@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,21 +29,21 @@ public class BookController
         }
 
         @PostMapping
-        @Secured("ROLE_USER")
-        public Book create ( @RequestBody Book book )
+        @Secured ("ROLE_USER")
+        public Book create ( @Valid @RequestBody Book book )
         {
                 return bookService.create( book );
         }
 
         @DeleteMapping ("/{id}")
-        @Secured("ROLE_USER")
+        @Secured ("ROLE_USER")
         public boolean deleteById ( @PathVariable Long id )
         {
                 return bookService.deleteById( id );
         }
 
         @DeleteMapping
-        @Secured("ROLE_USER")
+        @Secured ("ROLE_USER")
         public boolean delete ( @RequestBody Book book )
         {
                 return bookService.delete( book );

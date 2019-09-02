@@ -78,7 +78,6 @@ public class RepositoryInitializer
                         {
                                 userRoleRepository.save( new UserRole( 1L, UserRole.UserType.ROLE_USER ) );
                                 userRoleRepository.save( new UserRole( 2L, UserRole.UserType.ROLE_ADMIN ) );
-
                         }
 
                         if ( userRepository.findAll().isEmpty() )

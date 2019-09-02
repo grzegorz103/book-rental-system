@@ -29,4 +29,11 @@ public class Rental
 
         @Column (name = "return_date")
         private LocalDate returnDate;
+
+        @Column (name = "returned")
+        private boolean returned;
+
+        @ManyToOne (fetch = FetchType.EAGER)
+        @JoinColumn (name = "user_id", nullable = false)
+        private User user;
 }
