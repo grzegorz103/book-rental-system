@@ -1,4 +1,4 @@
-# Book Rental System
+# Book Rental System [![CircleCI](https://circleci.com/gh/grzegorz103/BookRentalSystem.svg?style=svg)](https://circleci.com/gh/grzegorz103/BookRentalSystem)
 Book rental system created with Spring and Angular
 
 ## Live demo
