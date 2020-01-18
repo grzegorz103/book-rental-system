@@ -10,28 +10,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity (securedEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter
-{
-        @Override
-        protected void configure ( HttpSecurity http ) throws Exception
-        {
-                http
-                        .authorizeRequests()
-                        .anyRequest()
-                        .permitAll()
-                        .and()
-                        .httpBasic()
-                        .and()
-                        .cors()
-                        .and()
-                        .csrf()
-                        .disable();
-        }
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+            .anyRequest()
+            .permitAll()
+            .and()
+            .httpBasic()
+            .and()
+            .cors()
+            .and()
+            .csrf()
+            .disable();
+    }
 
-        @Bean
-        public BCryptPasswordEncoder encoder ()
-        {
-                return new BCryptPasswordEncoder();
-        }
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

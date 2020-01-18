@@ -21,45 +21,42 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith (SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc (secure = false)
-public class UserControllerTest
-{
-        @Autowired
-        private MockMvc mockMvc;
+@AutoConfigureMockMvc(secure = false)
+public class UserControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
 
-        @MockBean
-        private UserService userService;
+    @MockBean
+    private UserService userService;
 
-        @Test
-        public void createUserTest () throws Exception
-        {
+    @Test
+    public void createUserTest() throws Exception {
 
-                final UserDTO testUser = UserDTO.builder()
-                        .username( "testUser" )
-                        .password( "testPass" )
-                        .passwordConfirm( "testPass" )
-                        .build();
+        final UserDTO testUser = UserDTO.builder()
+            .username("testUser")
+            .password("testPass")
+            .passwordConfirm("testPass")
+            .build();
 
-                when( userService.create( testUser ) ).thenReturn( testUser );
-                ObjectMapper objectMapper = new ObjectMapper();
-                this.mockMvc.perform( post( "/api/user" )
-                        .with( user( "admin" ).password( "admin" ).roles( "ADMIN" ) )
-                        .contentType( MediaType.APPLICATION_JSON )
-                        .content( objectMapper.writeValueAsString( testUser ) ) )
-                        .andExpect( status().isOk() )
-                        .andExpect( jsonPath( "$.username" ).value( testUser.getUsername() ) );
-        }
+        when(userService.create(testUser)).thenReturn(testUser);
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.mockMvc.perform(post("/api/user")
+            .with(user("admin").password("admin").roles("ADMIN"))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(testUser)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.username").value(testUser.getUsername()));
+    }
 
-        @Test
-        public void deleteUserByIdTest () throws Exception
-        {
-                this.mockMvc.perform( delete( "/api/user/{id}", "1" )
-                        .contentType( MediaType.APPLICATION_JSON )
-                        .with( user( "admin" ).password( "admin" ).roles( "ADMIN" ) )
-                        .accept( MediaType.APPLICATION_JSON ) )
-                        .andExpect( status().isOk() );
-        }
+    @Test
+    public void deleteUserByIdTest() throws Exception {
+        this.mockMvc.perform(delete("/api/user/{id}", "1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .with(user("admin").password("admin").roles("ADMIN"))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
 
 }

@@ -12,36 +12,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api/rent")
+@RequestMapping("/api/rent")
 @CrossOrigin
-public class RentalController
-{
-        private final RentalService rentalService;
+public class RentalController {
+    private final RentalService rentalService;
 
-        @Autowired
-        public RentalController ( RentalService rentalService )
-        {
-                this.rentalService = rentalService;
-        }
+    @Autowired
+    public RentalController(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
 
-        @GetMapping
-        @PreAuthorize ("isAuthenticated")
-        public List<RentalDTO> findAll ()
-        {
-                return rentalService.findAll();
-        }
+    @GetMapping
+    @PreAuthorize("isAuthenticated")
+    public List<RentalDTO> findAll() {
+        return rentalService.findAll();
+    }
 
-        @GetMapping ("/{id}")
-        @PreAuthorize ("isAuthenticated")
-        public RentalDTO rentBook ( @PathVariable ("id") Book book )
-        {
-                return rentalService.create( book );
-        }
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated")
+    public RentalDTO rentBook(@PathVariable("id") Book book) {
+        return rentalService.create(book);
+    }
 
-        @GetMapping ("/return/{id}")
-        @PreAuthorize ("isAuthenticated")
-        public RentalDTO returnBook ( @PathVariable ("id") Rental rental )
-        {
-                return rentalService.returnBook( rental );
-        }
+    @GetMapping("/return/{id}")
+    @PreAuthorize("isAuthenticated")
+    public RentalDTO returnBook(@PathVariable("id") Rental rental) {
+        return rentalService.returnBook(rental);
+    }
 }

@@ -6,11 +6,10 @@ import book.system.models.Rental;
 
 import java.util.List;
 
-public interface RentalService
-{
-        List<RentalDTO> findAll();
+public interface RentalService {
+    List<RentalDTO> findAll();
 
-        RentalDTO create ( Book book );
+    RentalDTO create(Book book);
 
-        RentalDTO returnBook ( Rental rental );
+    RentalDTO returnBook(Rental rental);
 }

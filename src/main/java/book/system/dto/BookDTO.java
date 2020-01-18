@@ -15,22 +15,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookDTO
-{
-        private Long id;
+public class BookDTO {
+    private Long id;
 
-        @NotBlank
-        private String author;
+    @NotBlank
+    private String author;
 
-        @NotBlank
-        private String title;
+    @NotBlank
+    private String title;
 
-        @NotNull
-        private LocalDate publishDate;
+    @NotNull
+    private LocalDate publishDate;
 
-        @Positive
-        @NotNull
-        private Integer pageNumber;
+    @Positive
+    @NotNull
+    private Integer pageNumber;
 
-        private boolean borrowed;
+    private boolean borrowed;
 }

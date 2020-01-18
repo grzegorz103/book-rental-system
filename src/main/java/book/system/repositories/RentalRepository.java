@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RentalRepository extends JpaRepository<Rental, Long>
-{
-        List<Rental> findAllByUser ( User user );
+public interface RentalRepository extends JpaRepository<Rental, Long> {
+    List<Rental> findAllByUser(User user);
 }

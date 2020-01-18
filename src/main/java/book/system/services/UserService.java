@@ -7,17 +7,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService
-{
-        List<UserDTO> findAll ();
+public interface UserService extends UserDetailsService {
+    List<UserDTO> findAll();
 
-        UserDTO create ( UserDTO userDTO );
+    UserDTO create(UserDTO userDTO);
 
-        boolean delete ( UserDTO userDTO );
+    boolean delete(UserDTO userDTO);
 
-        boolean deleteById ( Long id );
+    boolean deleteById(Long id);
 
-        boolean hasAdminRole ();
+    boolean hasAdminRole();
 
-        boolean isLoginCorrect ( String username, String password );
+    boolean isLoginCorrect(String username, String password);
 }

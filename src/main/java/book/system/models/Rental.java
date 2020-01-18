@@ -9,34 +9,33 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table (name = "rents")
+@Table(name = "rents")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Rental
-{
-        @Id
-        @GeneratedValue (strategy = GenerationType.AUTO)
-        private Long id;
+public class Rental {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-        @ManyToOne
-        @JoinColumn (name = "book_id", nullable = false)
-        private Book book;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
 
-        @Column (name = "rental_date")
-        private LocalDate rentalDate;
+    @Column(name = "rental_date")
+    private LocalDate rentalDate;
 
-        @Column (name = "return_date")
-        private LocalDate returnDate;
+    @Column(name = "return_date")
+    private LocalDate returnDate;
 
-        @Column (name = "returned")
-        private boolean returned;
+    @Column(name = "returned")
+    private boolean returned;
 
-        @ManyToOne
-        @JoinColumn (name = "user_id", nullable = false)
-        private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-        @Column (name = "penalty")
-        private Float penalty;
+    @Column(name = "penalty")
+    private Float penalty;
 }

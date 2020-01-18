@@ -23,71 +23,65 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
-@RunWith (MockitoJUnitRunner.class)
-public class BookServiceTest
-{
-        @Mock
-        private BookRepository bookRepository;
+@RunWith(MockitoJUnitRunner.class)
+public class BookServiceTest {
+    @Mock
+    private BookRepository bookRepository;
 
-        @InjectMocks
-        private BookServiceImpl bookService;
+    @InjectMocks
+    private BookServiceImpl bookService;
 
-        @Spy
-        private BookMapper bookMapper;
+    @Spy
+    private BookMapper bookMapper;
 
-        private List<BookDTO> books;
+    private List<BookDTO> books;
 
-        @Before
-        public void setup ()
-        {
-                this.books = new ArrayList<>();
-                books.add(
-                        BookDTO.builder()
-                                .id( 1L )
-                                .author( "TestAuthor" )
-                                .title( "TestTitle" )
-                                .pageNumber( 150 )
-                                .build()
-                );
-                books.add(
-                        BookDTO.builder()
-                                .id( 2L )
-                                .author( "TestAuthor2" )
-                                .title( "TestTitle2" )
-                                .pageNumber( 120 )
-                                .build()
-                );
-        }
+    @Before
+    public void setup() {
+        this.books = new ArrayList<>();
+        books.add(
+            BookDTO.builder()
+                .id(1L)
+                .author("TestAuthor")
+                .title("TestTitle")
+                .pageNumber(150)
+                .build()
+        );
+        books.add(
+            BookDTO.builder()
+                .id(2L)
+                .author("TestAuthor2")
+                .title("TestTitle2")
+                .pageNumber(120)
+                .build()
+        );
+    }
 
-        @Test
-        public void findAllBooksTest ()
-        {
-                bookService.findAll();
-                verify( bookRepository, times( 1 ) ).findAll();
-        }
+    @Test
+    public void findAllBooksTest() {
+        bookService.findAll();
+        verify(bookRepository, times(1)).findAll();
+    }
 
-        @Test
-        public void createBookTest ()
-        {
-                BookDTO bookDTO = BookDTO.builder().author( "testAuthor" ).title( "testTitle" ).build();
-                bookService.create( bookDTO );
+    @Test
+    public void createBookTest() {
+        BookDTO bookDTO = BookDTO.builder().author("testAuthor").title("testTitle").build();
+        bookService.create(bookDTO);
 
-                verify( bookRepository, times( 1 ) ).save( any( Book.class ) );
-        }
+        verify(bookRepository, times(1)).save(any(Book.class));
+    }
 
-        @Test
-        public void deleteBookTest ()
-        {
-                when( bookRepository.existsById( 1L ) ).thenReturn( true );
-                assertThat( bookService.delete( books.get( 0 ) ) ).isEqualTo( true );
-                assertFalse( bookService.delete( null ) );
-        }
+    @Test
+    public void deleteBookTest() {
+        when(bookRepository.existsById(1L)).thenReturn(true);
+        assertThat(bookService.delete(books.get(0))).isEqualTo(true);
+        assertFalse(bookService.delete(null));
+    }
 
-        @Test
-        public void deleteBookByIdTest ()
-        {
-                when( bookRepository.existsById( 1L ) ).thenReturn( true );
-                assertThat( bookService.delete( books.get( 0 ) ) ).isEqualTo( true );
-                assertFalse( bookService.deleteById( null ) );
-        }
+    @Test
+    public void deleteBookByIdTest() {
+        when(bookRepository.existsById(1L)).thenReturn(true);
+        assertThat(bookService.delete(books.get(0))).isEqualTo(true);
+        assertFalse(bookService.deleteById(null));
+    }
 }

@@ -11,57 +11,49 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api/user")
+@RequestMapping("/api/user")
 @CrossOrigin
-public class UserController
-{
-        private final UserService userService;
+public class UserController {
+    private final UserService userService;
 
-        @Autowired
-        public UserController ( UserService userService )
-        {
-                this.userService = userService;
-        }
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-        @GetMapping
-        @Secured ("ROLE_ADMIN")
-        public List<UserDTO> findAll ()
-        {
-                return userService.findAll();
-        }
+    @GetMapping
+    @Secured("ROLE_ADMIN")
+    public List<UserDTO> findAll() {
+        return userService.findAll();
+    }
 
-        @PostMapping
-        @PreAuthorize ("isAnonymous()")
-        public UserDTO create ( @Valid @RequestBody UserDTO userDTO )
-        {
-                return userService.create( userDTO );
-        }
+    @PostMapping
+    @PreAuthorize("isAnonymous()")
+    public UserDTO create(@Valid @RequestBody UserDTO userDTO) {
+        return userService.create(userDTO);
+    }
 
-        @DeleteMapping
-        @Secured ("ROLE_ADMIN")
-        public boolean delete ( @RequestBody UserDTO userDTO )
-        {
-                return userService.delete( userDTO );
-        }
+    @DeleteMapping
+    @Secured("ROLE_ADMIN")
+    public boolean delete(@RequestBody UserDTO userDTO) {
+        return userService.delete(userDTO);
+    }
 
-        @DeleteMapping ("/{id}")
-        @Secured ("ROLE_ADMIN")
-        public boolean deleteByID ( @PathVariable ("id") Long id )
-        {
-                return userService.deleteById( id );
-        }
+    @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
+    public boolean deleteByID(@PathVariable("id") Long id) {
+        return userService.deleteById(id);
+    }
 
-        @GetMapping ("/admin")
-        @PreAuthorize ("isAuthenticated()")
-        public Boolean hasAdminRole ()
-        {
-                return userService.hasAdminRole();
-        }
+    @GetMapping("/admin")
+    @PreAuthorize("isAuthenticated()")
+    public Boolean hasAdminRole() {
+        return userService.hasAdminRole();
+    }
 
-        @RequestMapping ("/login")
-        @PreAuthorize ("isAnonymous()")
-        public boolean login ( @Valid @RequestBody UserDTO userDTO )
-        {
-                return userService.isLoginCorrect( userDTO.getUsername(), userDTO.getPassword() );
-        }
+    @RequestMapping("/login")
+    @PreAuthorize("isAnonymous()")
+    public boolean login(@Valid @RequestBody UserDTO userDTO) {
+        return userService.isLoginCorrect(userDTO.getUsername(), userDTO.getPassword());
+    }
 }

@@ -12,38 +12,37 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table (name = "books")
+@Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class Book
-{
-        @Id
-        @GeneratedValue (strategy = GenerationType.AUTO)
-        private Long id;
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-        @Column (name = "author", length = 50)
-        @NotBlank
-        private String author;
+    @Column(name = "author", length = 50)
+    @NotBlank
+    private String author;
 
-        @Column (name = "title", length = 100)
-        @NotBlank
-        private String title;
+    @Column(name = "title", length = 100)
+    @NotBlank
+    private String title;
 
-        @NotNull
-        private LocalDate publishDate;
+    @NotNull
+    private LocalDate publishDate;
 
-        @Column (name = "page_number")
-        @Positive
-        @NotNull
-        private Integer pageNumber;
+    @Column(name = "page_number")
+    @Positive
+    @NotNull
+    private Integer pageNumber;
 
-        @Column (name = "borrowed")
-        private boolean borrowed;
+    @Column(name = "borrowed")
+    private boolean borrowed;
 
-        @OneToMany (mappedBy = "book", cascade = CascadeType.ALL)
-        @JsonIgnore
-        @ToString.Exclude
-        private List<Rental> rental;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Rental> rental;
 }

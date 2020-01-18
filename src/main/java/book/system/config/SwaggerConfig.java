@@ -11,14 +11,13 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
 @Configuration
-public class SwaggerConfig
-{
-        @Bean
-        public Docket productAPi(){
-                return new Docket(DocumentationType.SWAGGER_2)
-                        .select()
-                        .apis(RequestHandlerSelectors.basePackage("book.system"))
-                        .paths(regex("/api.*"))
-                        .build();
-        }
+public class SwaggerConfig {
+    @Bean
+    public Docket productAPi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("book.system"))
+            .paths(regex("/api.*"))
+            .build();
+    }
 }

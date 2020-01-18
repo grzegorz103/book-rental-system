@@ -5,15 +5,14 @@ import book.system.models.Book;
 
 import java.util.List;
 
-public interface BookService
-{
-        BookDTO create ( BookDTO bookDTO );
+public interface BookService {
+    BookDTO create(BookDTO bookDTO);
 
-        List<BookDTO> findAll ();
+    List<BookDTO> findAll();
 
-        boolean delete ( BookDTO bookDTO );
+    boolean delete(BookDTO bookDTO);
 
-        boolean deleteById ( Long id );
+    boolean deleteById(Long id);
 
-        BookDTO update ( BookDTO book );
+    BookDTO update(BookDTO book);
 }

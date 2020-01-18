@@ -25,77 +25,70 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith (MockitoJUnitRunner.class)
-public class UserServiceTest
-{
-        @Mock
-        private UserRepository userRepository;
+@RunWith(MockitoJUnitRunner.class)
+public class UserServiceTest {
+    @Mock
+    private UserRepository userRepository;
 
-        @InjectMocks
-        private UserServiceImpl userService;
+    @InjectMocks
+    private UserServiceImpl userService;
 
-        @Mock
-        private UserRoleRepository roleRepository;
+    @Mock
+    private UserRoleRepository roleRepository;
 
-        @Spy
-        private UserMapper userMapper;
+    @Spy
+    private UserMapper userMapper;
 
-        @Spy
-        private BCryptPasswordEncoder encoder;
+    @Spy
+    private BCryptPasswordEncoder encoder;
 
-        private UserDTO test;
+    private UserDTO test;
 
-        @Before
-        public void setup ()
-        {
-                test = UserDTO.builder().id( 1L ).username( "testUser" ).password( "testPass" ).passwordConfirm( "testPass" ).build();
-        }
+    @Before
+    public void setup() {
+        test = UserDTO.builder().id(1L).username("testUser").password("testPass").passwordConfirm("testPass").build();
+    }
 
-        @Test
-        public void loadByUsernameTest ()
-        {
-                User test = User.builder().username( "testName" ).password( "testPass" ).build();
-                when( userRepository.findByUsername( "testName" ) ).thenReturn( test );
+    @Test
+    public void loadByUsernameTest() {
+        User test = User.builder().username("testName").password("testPass").build();
+        when(userRepository.findByUsername("testName")).thenReturn(test);
 
-                assertThat( userService.loadUserByUsername( "testName" ) ).isEqualTo( test );
-        }
+        assertThat(userService.loadUserByUsername("testName")).isEqualTo(test);
+    }
 
-        @Test (expected = UsernameNotFoundException.class)
-        public void loadByUsernameExceptionTest ()
-        {
-                when( userRepository.findByUsername( "testName" ) ).thenReturn( null );
-                userService.loadUserByUsername( "testName" );
-        }
+    @Test(expected = UsernameNotFoundException.class)
+    public void loadByUsernameExceptionTest() {
+        when(userRepository.findByUsername("testName")).thenReturn(null);
+        userService.loadUserByUsername("testName");
+    }
 
-        @Test
-        public void createUserTest ()
-        {
-                when( roleRepository.findByUserType( UserRole.UserType.ROLE_USER ) ).thenReturn( new UserRole( 1L, UserRole.UserType.ROLE_USER ) );
-                test = UserDTO.builder().username( "testUser" ).password( "testPass" ).passwordConfirm( "testPass" ).build();
+    @Test
+    public void createUserTest() {
+        when(roleRepository.findByUserType(UserRole.UserType.ROLE_USER)).thenReturn(new UserRole(1L, UserRole.UserType.ROLE_USER));
+        test = UserDTO.builder().username("testUser").password("testPass").passwordConfirm("testPass").build();
 
-                userService.create( test );
+        userService.create(test);
 
-                verify( userRepository ).save( any( User.class ) );
-                verify( encoder ).encode( anyString() );
-                verify( roleRepository ).findByUserType( any( UserRole.UserType.class ) );
-        }
+        verify(userRepository).save(any(User.class));
+        verify(encoder).encode(anyString());
+        verify(roleRepository).findByUserType(any(UserRole.UserType.class));
+    }
 
-        @Test
-        public void deleteUserTest ()
-        {
-                when( userRepository.existsById( anyLong() ) ).thenReturn( true );
-                assertTrue( userService.delete( test ) );
-                assertFalse( userService.delete( null ) );
-                verify( userRepository ).delete( any( User.class ) );
-        }
+    @Test
+    public void deleteUserTest() {
+        when(userRepository.existsById(anyLong())).thenReturn(true);
+        assertTrue(userService.delete(test));
+        assertFalse(userService.delete(null));
+        verify(userRepository).delete(any(User.class));
+    }
 
-        @Test
-        public void deleteUserByIdTest ()
-        {
-                when( userRepository.existsById( anyLong() ) ).thenReturn( true );
+    @Test
+    public void deleteUserByIdTest() {
+        when(userRepository.existsById(anyLong())).thenReturn(true);
 
-                assertTrue( userService.deleteById( 1L ) );
-                verify( userRepository ).deleteById( anyLong() );
-                assertFalse( userService.deleteById( null ) );
-        }
+        assertTrue(userService.deleteById(1L));
+        verify(userRepository).deleteById(anyLong());
+        assertFalse(userService.deleteById(null));
+    }
 }

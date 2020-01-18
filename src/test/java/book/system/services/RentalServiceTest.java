@@ -33,62 +33,57 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith (MockitoJUnitRunner.class)
-public class RentalServiceTest
-{
-        @Spy
-        private RentalRepository rentalRepository;
+@RunWith(MockitoJUnitRunner.class)
+public class RentalServiceTest {
+    @Spy
+    private RentalRepository rentalRepository;
 
-        @Mock
-        private BookService bookService;
+    @Mock
+    private BookService bookService;
 
-        @InjectMocks
-        private RentalServiceImpl rentalService;
+    @InjectMocks
+    private RentalServiceImpl rentalService;
 
-        @Spy
-        private RentalMapper rentalMapper;
+    @Spy
+    private RentalMapper rentalMapper;
 
-        @Spy
-        private BookMapper bookMapper;
+    @Spy
+    private BookMapper bookMapper;
 
-        @Test
-        public void findAllRentsTest ()
-        {
-                List<Rental> rentals = new ArrayList<>();
-                rentals.add( mock( Rental.class ) );
-                rentals.add( mock( Rental.class ) );
-                when( rentalRepository.findAll() ).thenReturn( rentals );
-                rentalService.findAll();
-                verify( rentalRepository ).findAll();
-                verify( rentalMapper, atLeastOnce() ).rentalToDTO( any( Rental.class ) );
-        }
+    @Test
+    public void findAllRentsTest() {
+        List<Rental> rentals = new ArrayList<>();
+        rentals.add(mock(Rental.class));
+        rentals.add(mock(Rental.class));
+        when(rentalRepository.findAll()).thenReturn(rentals);
+        rentalService.findAll();
+        verify(rentalRepository).findAll();
+        verify(rentalMapper, atLeastOnce()).rentalToDTO(any(Rental.class));
+    }
 
-        @Test (expected = RuntimeException.class)
-        public void createRentalWithBorrowedBookTest ()
-        {
-                Book book = Book.builder().borrowed( true ).build();
-                rentalService.create( book );
-        }
+    @Test(expected = RuntimeException.class)
+    public void createRentalWithBorrowedBookTest() {
+        Book book = Book.builder().borrowed(true).build();
+        rentalService.create(book);
+    }
 
-        @Test
-        public void createRental ()
-        {
-                Authentication authentication = Mockito.mock( Authentication.class );
-                SecurityContext securityContext = Mockito.mock( SecurityContext.class );
-                when( securityContext.getAuthentication() ).thenReturn( authentication );
-                SecurityContextHolder.setContext( securityContext );
-                Book book = Book.builder().borrowed( false ).author( "testAuthor" ).title( "testTitle" ).build();
-                when( bookService.update( any( BookDTO.class ) ) ).thenReturn( null );
-                rentalService.create( book );
+    @Test
+    public void createRental() {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Book book = Book.builder().borrowed(false).author("testAuthor").title("testTitle").build();
+        when(bookService.update(any(BookDTO.class))).thenReturn(null);
+        rentalService.create(book);
 
-                verify( bookService ).update( any( BookDTO.class ) );
-                verify( rentalRepository ).save( any( Rental.class ) );
-        }
+        verify(bookService).update(any(BookDTO.class));
+        verify(rentalRepository).save(any(Rental.class));
+    }
 
-        @Test (expected = RuntimeException.class)
-        public void returnIncorrectBookTest ()
-        {
-                rentalService.returnBook( null );
-        }
+    @Test(expected = RuntimeException.class)
+    public void returnIncorrectBookTest() {
+        rentalService.returnBook(null);
+    }
 
 }

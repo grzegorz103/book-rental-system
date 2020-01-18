@@ -14,23 +14,22 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RentalDTO
-{
-        private Long id;
+public class RentalDTO {
+    private Long id;
 
-        @NotNull
-        private Book book;
+    @NotNull
+    private Book book;
 
-        @NotNull
-        private LocalDate rentalDate;
+    @NotNull
+    private LocalDate rentalDate;
 
-        @NotNull
-        private LocalDate returnDate;
-        private boolean returned;
+    @NotNull
+    private LocalDate returnDate;
+    private boolean returned;
 
-        @NotNull
-        private User user;
+    @NotNull
+    private User user;
 
-        @PositiveOrZero
-        private Float penalty;
+    @PositiveOrZero
+    private Float penalty;
 }

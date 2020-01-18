@@ -14,28 +14,26 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO
-{
-        private Long id;
+public class UserDTO {
+    private Long id;
 
-        @Length (min = 4, max = 50)
-        @NotEmpty
-        private String username;
+    @Length(min = 4, max = 50)
+    @NotEmpty
+    private String username;
 
-        @Length (min = 6)
-        @NotEmpty
-        private String password;
+    @Length(min = 6)
+    @NotEmpty
+    private String password;
 
-        @Length (min = 6)
-        @NotEmpty
-        private String passwordConfirm;
+    @Length(min = 6)
+    @NotEmpty
+    private String passwordConfirm;
 
-        @AssertTrue
-        public boolean isPasswordEquals ()
-        {
-                if ( password.isEmpty() || passwordConfirm.isEmpty() )
-                        return false;
+    @AssertTrue
+    public boolean isPasswordEquals() {
+        if (password.isEmpty() || passwordConfirm.isEmpty())
+            return false;
 
-                return password.equals( passwordConfirm );
-        }
+        return password.equals(passwordConfirm);
+    }
 }
