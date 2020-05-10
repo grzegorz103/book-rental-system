@@ -1,33 +1,52 @@
-# Book Rental System [![CircleCI](https://circleci.com/gh/grzegorz103/BookRentalSystem.svg?style=svg)](https://circleci.com/gh/grzegorz103/BookRentalSystem)
-Book rental system created with Spring and Angular
+# Book Rental System 
+[![CircleCI](https://circleci.com/gh/grzegorz103/BookRentalSystem.svg?style=svg)](https://circleci.com/gh/grzegorz103/BookRentalSystem)
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/grzegorz103/book-rental-system">
+## Table of contents
+* [General info](#general-info)
+* [Demo](#demo)
+* [Technologies](#technologies)
+* [Features](#features)
+* [Setup](#setup)
 
-## Live demo
-Check [live demo](https://rent-book.herokuapp.com/)
+## General info
+Book rental system created with Spring and Angular 5.
 
-## How to run it?
-This application uses PostgreSQL so configure your database first and set username/password in the application.properties file stored in resources.  
-Launch SystemApplication class from book/system directory. Remember to have Lombok plugin installed.   
-To start angular app, you need to type 'ng serve' in angular console. Make sure you are in the \BookRentalSystem\front folder!  
-The app will start at http://localhost:4200/  
-Swagger doc is available on http://localhost:8080/swagger-ui.html  
-## Example login data
-Admin account
-* login: admin password: admin1
+## Demo
 
-User accounts:
-* login: user1 password: usertest
-* login: user2 password: usertest2
+**[Click here](https://rent-book.herokuapp.com/)**
 
-Admin has ability to remove users and create new books.  
-user2 account is unable to borrow new books because he has penalty for not returning book back on time
+### Example users
+| __Login__ | __Password__ | Role |
+| -------------- | ------------ | --- |
+| admin | admin1 | Admin |
+| user1 | usertest | User |
+| user2 | usertest2 | User | 
 
-# Example screens:  
+## Technologies
+* Spring (Boot, MVC, Security, Data JPA)
+* Hibernate
+* PostgreSQL
+* Lombok, Swagger
+* JUnit, Mockito
+* CircleCI
+* Angular 5
 
-Book list page:  
-![alt text](https://i.imgur.com/j96d8dn.png)  
+## Setup
+### Prerequisites
 
-User's rented books page:  
-![alt text](https://i.imgur.com/ZK1bH90.png)
+- Angular 8 or greater is required
+```$xslt
+$ npm install -g @angular/cli
+``` 
+- Java 8 or greater
 
-User's rented books page (has penalty):   
-![alt text](https://imgur.com/qaNc4n2.png)
+### Deployment
+
+```
+$ mvn spring-boot:run -Dspring-boot.run.profiles=dev
+$ cd front
+$ npm install
+$ ng serve
+```
+Run browser and head to ```http://localhost:4200```    
+Swagger doc is available at ```http://localhost:8080/swagger-ui.html ```
