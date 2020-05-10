@@ -13,7 +13,7 @@ Book rental system created with Spring and Angular 5.
 
 ## Demo
 
-[Click here](https://rent-book.herokuapp.com/)
+**[Click here](https://rent-book.herokuapp.com/)**
 
 ### Example users
 | __Login__ | __Password__ | Role |
@@ -26,7 +26,8 @@ Book rental system created with Spring and Angular 5.
 * Spring (Boot, MVC, Security, Data JPA)
 * Hibernate
 * PostgreSQL
-* Lombok, JUnit, Mockito
+* Lombok, Swagger
+* JUnit, Mockito
 * CircleCI
 * Angular 5
 
